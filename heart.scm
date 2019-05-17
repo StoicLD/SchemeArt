@@ -11,26 +11,7 @@
 
 (define (rgb-new r g b) (rgb (/ r 255) (/ g 255) (/ b 255)))
 
-(define (for-large i step limit) 
-                (cond 
-                    ((> i limit) ())
-                    (else (for-large (+ i step) step limit)))
-)
-
 (define (cube x) (* x (* x x)))
-
-(define (for-out y limitY stepY)
-        (define (for-inner x limitX stepX) 
-                    (cond 
-                        ((< limitX) (define a (- (+ (* x x) (y * y)) 1)) ())
-                    )
-        )
-        (cond 
-            ((> y limitY) ())
-            (else  (for-inner (+ x step) limit) (for-out ((- y step) limitY stepY)))
-        )
-)
-
 
 (define (draw)
   ; YOUR CODE HERE
@@ -52,41 +33,35 @@
                 )
     )
 
-    (pixelsize 10)
+    (pixelsize 2)
     (define (for-out y limitY stepY countY)
             (define (for-inner x limitX stepX countX)
-                        (pd)
-                        (print (list "start insssside loop" countX)) 
                         (cond 
                             ((< x limitX) 
                                 (begin
-                                    (print (list "now inside < limitX" countX)) 
                                     (define a (- (+ (* x x) (* y y)) 1)) 
                                     (cond 
-                                        ((func1 a x y) (pixel countX countY "red"))
-                                        (else (pixel countX (+ countY 220) "black"))
+                                        ((func1 a x y) (pixel (+ 100 countX) (- 200 countY) "red"))
+                                        (else (pixel (+ 100 countX) (- 200 countY) "white"))
                                     )
                                     (for-inner (+ x stepX) limitX stepX (+ countX 1))
                                 )
                             )
-                            (else (print (list "start inside else" countX)))
                         )
             )
             (cond 
                 ((< y limitY) 0)
                 (else  
                     (begin
-                        (print (list "start outside loop" countY)) 
                         (pu)
-                        (goto (- countY 200) 120) 
-                        (for-inner -1.5 1.5 0.05 0) 
+                        (goto (- 200 countY) 120) 
+                        (for-inner -3 3 0.01225 0) 
                         (for-out (+ y stepY) limitY stepY (+ countY 1))
                     )
                 )
             )
     )
-
-  (print (for-out 1.5 -1.5 -0.1 0))
+  (print (for-out 3 -3 -0.025 0))
   (exitonclick)
 )
   
